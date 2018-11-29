@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col-2">
+            <mat-form-field class="example-full-width" required>                
+                <input matInput placeholder="Enter Twitter Name" [(ngModel)]="twitterHandle">
+            </mat-form-field>
+        </div>
+        
+        <div class="col-4">
+            <button mat-raised-button color="primary" class="btn" (click)="callMoodStatusService()">Mood Status</button>        
+            <button mat-raised-button color="primary" class="btn" (click)="callFinancialPatternService()">Financial Pattern</button>        
+        </div>
+    </div>
+    
+    
+    
+    <div *ngIf="showChart" class="row-justify-content-md-center">
+        <div class="col-8">
+            <canvas baseChart
+                    [data]="pieChartData"
+                    [labels]="pieChartLabels"
+                    [chartType]="pieCharType"
+                    (chartHover)="chartHoevered($event)"
+                    (chartClick)="chartClicked($event)">       
+            </canvas>        
+        </div>
+    </div>
+
+    <div class="form-group">
+        <a href="#" *ngIf="showChart" (click)="viewJSON()"> View JSON</a>
+        
+        <textarea *ngIf="showTA" class="form-control rounded-0" rows="5" id="textArea" [(ngModel)]="textAreaValue"></textarea>
+    </div>
+</div>
