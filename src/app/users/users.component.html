@@ -13,21 +13,52 @@
     </div>
     
     
-    
-    <div *ngIf="showChart" class="row-justify-content-md-center">
-        <div class="col-8">
+    <div *ngIf="showCircle" class="row-justify-content-md-center circlePosition">
+        <circle-progress [radius]="160"
+                         [percent]="percent"
+                         [units]="Interest"
+                         [outerStrokeLinecap]="square"
+                         [outerStrokeWidth]="9"
+                         [innerStrokeWidth]="3"
+                         [outerStrokeColor]="'#008000'"
+                         [innerStrokeColor]="'#7dff7d'"
+                         [titleFontSize]="55"
+                         [unitsFontSize]="30"                         
+                         [animation]="true"
+                         [animationDuration]="300"
+                         [showSubtitle]="false">
+        </circle-progress>
+        <span>Financial Interest</span>
+    </div>
+
+    <div *ngIf="showPieChart" class="row-justify-content-md-center">
+        <div >
             <canvas baseChart
                     [data]="pieChartData"
                     [labels]="pieChartLabels"
-                    [chartType]="pieCharType"
+                    [chartType]="pieChartType"
                     (chartHover)="chartHoevered($event)"
                     (chartClick)="chartClicked($event)">       
             </canvas>        
         </div>
-    </div>
+    </div>  
+    
+    
+    <div *ngIf="showPieChart2" class="row-justify-content-md-center">
+        <div >
+            <canvas baseChart
+                    [data]="pieChart2Data"
+                    [labels]="pieChart2Labels"
+                    [chartType]="pieChart2Type"
+                    (chartHover)="chartHoevered($event)"
+                    (chartClick)="chartClicked($event)">       
+            </canvas>        
+        </div>
+    </div> 
+    
 
     <div class="form-group">
-        <a href="#" *ngIf="showChart" (click)="viewJSON()"> View JSON</a>
+        <a href="#" *ngIf="showPieChart" (click)="viewJSON()"> View JSON</a>
         
         <textarea *ngIf="showTA" class="form-control rounded-0" rows="5" id="textArea" [(ngModel)]="textAreaValue"></textarea>
     </div>

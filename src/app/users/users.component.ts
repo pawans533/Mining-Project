@@ -10,11 +10,19 @@ export class UsersComponent implements OnInit {
 
   public twitterHandle:string;
   public pieChartLabels:string[] = ['A'];
-  public pieChartData:number[]=[94];  
-  public pieCharType:string = 'pie';
-  public showChart:boolean = false;
+  public pieChartData:number[]=[94]; 
+  public pieChartType:string = 'pie';
+  public showPieChart:boolean = false;
+  
+  public pieChart2Labels:string[] = ['Z'];
+  public pieChart2Data:number=55;
+  public pieChart2Type:string = 'pie';
+  public showPieChart2:boolean = false;
+  
   public showTA:boolean = false;
   public textAreaValue: string;
+  public showCircle:boolean = false;
+  public percent:number = 2;
   
 
   constructor( private miningService: MiningService) { }
@@ -29,12 +37,14 @@ export class UsersComponent implements OnInit {
     this.miningService.GetUserInfo(this.twitterHandle).subscribe((data)=>{
         
         if(data && data.hasOwnProperty('personality'))
-        {
+        {   
             let labels = (data as any).personality.map(a => a.name);
             let percentile = (data as any).personality.map(a => a.percentile);        
             this.pieChartLabels = labels;
             this.pieChartData = percentile;
-            this.showChart = true; 
+            this.showPieChart = true; 
+            this.showCircle = false;
+            this.showPieChart2 = false;
         }
            
     });  
@@ -51,15 +61,27 @@ public callFinancialPatternService():void{
         {
             console.log(data);
             //let labels = (data as any).map(a => a.mergedFinTweetCounts);
-            let labels = (data as any).mergedFinTweetCounts;
-            //let percentile = (data as any).map(a => a.finPercent);        
-            let percentile = (data as any).finPercent;        
-            this.pieChartLabels = labels;
-            this.pieChartData = percentile;
-            this.showChart = true; 
-        }
-           
+            this.percent = (data as any).finPercent;
+            this.showCircle = true; 
+        }                   
     });  
+    
+    this.miningService.GetFinancialEntityInfo(this.twitterHandle).subscribe((data)=>{
+    
+        if(data){
+        
+            let labels = (data as any).map(a => a.entityName);
+            let percentile = (data as any).map(a => a.salience);                    
+            this.pieChart2Labels = labels;
+            this.pieChart2Data = percentile;
+            this.showPieChart2 = true;            
+        }
+
+    
+    });
+    
+    this.showPieChart = false;
+    
   }
   
   public viewJSON():void{

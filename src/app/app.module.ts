@@ -8,6 +8,7 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 import {HttpErrorHandler} from './http-error-handler.service';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 
 import { AppComponent } from './app.component';
@@ -28,7 +29,16 @@ import {NotificationService} from './notification.service';
     HttpClientModule,
     MaterialModule,
     BrowserAnimationsModule,
-    ChartsModule
+    ChartsModule,
+    NgCircleProgressModule.forRoot({
+      // set defaults here      
+      radius: 100,
+      outerStrokeWidth: 16,
+      innerStrokeWidth: 8,
+      outerStrokeColor: "#78C000",
+      innerStrokeColor: "#C7E596",
+      animationDuration: 300
+    })
   ],
   providers: [
   NotificationService,

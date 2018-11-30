@@ -16,6 +16,7 @@ export class MiningService{
     private handleError:HandleError;
     private url : string = "http://localhost:1337/cognitive-engine.cfapps.io/api/moodstatus";
     private financialURL : string = "http://localhost:1337/twitter-engine-latest.cfapps.io/getFinPercent";
+    private financialEntityURL:string = "http://localhost:1337/twitter-engine-latest.cfapps.io/getEntities";
     
     constructor(private http:HttpClient, private httpErrorHandler:HttpErrorHandler){
         this.handleError = httpErrorHandler.createHandleError("MiningService");
@@ -35,6 +36,15 @@ export class MiningService{
     public GetFinancialInfo(userName:string):Observable<Array<Personality>>{
         
         return this.http.get<Array<Personality>>(this.financialURL + "/" + userName)
+        .pipe(
+            catchError(this.handleError("Please enter a valid Twitter Handle",[]))
+        );
+        
+    }
+    
+    public GetFinancialEntityInfo(userName:string):Observable<Array<Personality>>{
+        
+        return this.http.get<Array<Personality>>(this.financialEntityURL + "/" + userName)
         .pipe(
             catchError(this.handleError("Please enter a valid Twitter Handle",[]))
         );
